@@ -25,11 +25,11 @@ mongoose
   .catch((err) => console.error('MongoDB connection error:', err))
 
 // Routes
-app.use('/transactions', transactionRoutes)
-app.use('/budgets', budgetRoutes)
-app.use('/categories', categoryRoutes)
-app.use('/reports', reportsRoutes)
-app.use('/auth', authRoutes)
+app.use('/api/transactions', transactionRoutes)
+app.use('/api/budgets', budgetRoutes)
+app.use('/api/categories', categoryRoutes)
+app.use('/api/reports', reportsRoutes)
+app.use('/api/auth', authRoutes)
 
 // Health check
 app.get('/health', (req, res) => {

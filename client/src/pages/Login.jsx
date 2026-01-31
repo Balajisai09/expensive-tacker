@@ -24,7 +24,7 @@ const Login = () => {
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
             // Navigate without reloading
-            navigate('/', { replace: true });
+            navigate('/dashboard', { replace: true });
 
         } catch (err) {
             const message =

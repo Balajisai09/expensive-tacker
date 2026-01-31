@@ -45,6 +45,7 @@
     font-weight: 700;
     margin-bottom: 10px;
     background: linear-gradient(135deg, #fff 0%, #cbd5e0 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -91,11 +92,21 @@
     transition: all 0.3s ease;
 }
 
+.form-input.error {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
 .form-input:focus {
     outline: none;
     border-color: #63b3ed;
     background: rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.1);
+}
+
+.form-input.error:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
 .form-icon {
@@ -147,4 +158,13 @@
 .auth-link:hover {
     color: #90cdf4;
     text-decoration: underline;
+}
+
+.field-error {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
