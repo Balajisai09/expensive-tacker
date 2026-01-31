@@ -1,0 +1,89 @@
+.transaction-list {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--glass-border);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--glass-border);
+  align-items: center;
+  transition: background-color 0.3s ease;
+  color: var(--text-primary);
+}
+
+.table-row:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.col-amount {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.col-amount.income {
+  color: #10b981;
+}
+
+.col-amount.expense {
+  color: #ef4444;
+}
+
+.btn-delete {
+  background-color: #ef4444;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+  background-color: #dc2626;
+  transform: translateY(-1px);
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .table-header,
+  .table-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .col-category,
+  .col-description,
+  .col-action {
+    grid-column: 1 / -1;
+  }
+}

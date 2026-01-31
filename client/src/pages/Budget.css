@@ -1,0 +1,21 @@
+.budget-page {
+  padding: 2rem;
+}
+
+.budget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.budget-header h1 {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .budget-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
