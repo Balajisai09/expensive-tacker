@@ -17,17 +17,39 @@ const Register = () => {
     const validateForm = () => {
         const errors = {};
         
+        // Name validation - only letters, spaces, hyphens, and apostrophes
+        const nameRegex = /^[a-zA-Z\s'-]+$/;
         if (!name.trim() || name.length < 2) {
             errors.name = 'Name must be at least 2 characters';
+        } else if (!nameRegex.test(name.trim())) {
+            errors.name = 'Name can only contain letters, spaces, hyphens, and apostrophes';
+        } else if (name.trim().length > 50) {
+            errors.name = 'Name must be less than 50 characters';
         }
         
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!email.trim() || !emailRegex.test(email)) {
+        // Email validation - stricter regex
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!email.trim() || !emailRegex.test(email.trim())) {
             errors.email = 'Please enter a valid email address';
+        } else if (email.trim().length > 100) {
+            errors.email = 'Email must be less than 100 characters';
         }
         
-        if (!password || password.length < 6) {
-            errors.password = 'Password must be at least 6 characters';
+        // Password validation - more comprehensive
+        if (!password || password.length < 8) {
+            errors.password = 'Password must be at least 8 characters';
+        } else if (password.length > 128) {
+            errors.password = 'Password must be less than 128 characters';
+        } else if (!/(?=.*[a-z])/.test(password)) {
+            errors.password = 'Password must contain at least one lowercase letter';
+        } else if (!/(?=.*[A-Z])/.test(password)) {
+            errors.password = 'Password must contain at least one uppercase letter';
+        } else if (!/(?=.*\d)/.test(password)) {
+            errors.password = 'Password must contain at least one number';
+        } else if (!/(?=.*[@$!%*?&])/.test(password)) {
+            errors.password = 'Password must contain at least one special character (@$!%*?&)';
+        } else if (/[\s<>]/.test(password)) {
+            errors.password = 'Password cannot contain spaces or angle brackets';
         }
         
         if (password !== confirmPassword) {
@@ -105,13 +127,16 @@ const Register = () => {
                                 placeholder="John Doe"
                                 value={name}
                                 onChange={(e) => {
-                                    setName(e.target.value);
+                                    // Only allow valid characters
+                                    const value = e.target.value.replace(/[^a-zA-Z\s'-]/g, '');
+                                    setName(value);
                                     if (fieldErrors.name) {
                                         setFieldErrors({...fieldErrors, name: ''});
                                     }
                                 }}
                                 required
                                 autoComplete="name"
+                                maxLength="50"
                             />
                         </div>
                         {fieldErrors.name && <span className="field-error">{fieldErrors.name}</span>}
@@ -128,13 +153,16 @@ const Register = () => {
                                 placeholder="you@example.com"
                                 value={email}
                                 onChange={(e) => {
-                                    setEmail(e.target.value);
+                                    // Convert to lowercase and trim
+                                    const value = e.target.value.toLowerCase().trim();
+                                    setEmail(value);
                                     if (fieldErrors.email) {
                                         setFieldErrors({...fieldErrors, email: ''});
                                     }
                                 }}
                                 required
                                 autoComplete="email"
+                                maxLength="100"
                             />
                         </div>
                         {fieldErrors.email && <span className="field-error">{fieldErrors.email}</span>}
@@ -151,15 +179,29 @@ const Register = () => {
                                 placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => {
-                                    setPassword(e.target.value);
+                                    // Remove spaces and angle brackets
+                                    const value = e.target.value.replace(/[\s<>]/g, '');
+                                    setPassword(value);
                                     if (fieldErrors.password) {
                                         setFieldErrors({...fieldErrors, password: ''});
                                     }
                                 }}
                                 required
                                 autoComplete="new-password"
-                                minLength="6"
+                                minLength="8"
+                                maxLength="128"
+                                title="Must contain: 8+ chars, uppercase, lowercase, number, and special character (@$!%*?&)"
                             />
+                        </div>
+                        <div className="password-requirements">
+                            <small>Password must contain:</small>
+                            <ul>
+                                <li className={password.length >= 8 ? 'valid' : ''}>At least 8 characters</li>
+                                <li className={/(?=.*[a-z])/.test(password) ? 'valid' : ''}>One lowercase letter</li>
+                                <li className={/(?=.*[A-Z])/.test(password) ? 'valid' : ''}>One uppercase letter</li>
+                                <li className={/(?=.*\d)/.test(password) ? 'valid' : ''}>One number</li>
+                                <li className={/(?=.*[@$!%*?&])/.test(password) ? 'valid' : ''}>One special character (@$!%*?&)</li>
+                            </ul>
                         </div>
                         {fieldErrors.password && <span className="field-error">{fieldErrors.password}</span>}
                     </div>
@@ -175,14 +217,17 @@ const Register = () => {
                                 placeholder="••••••••"
                                 value={confirmPassword}
                                 onChange={(e) => {
-                                    setConfirmPassword(e.target.value);
+                                    // Remove spaces and angle brackets
+                                    const value = e.target.value.replace(/[\s<>]/g, '');
+                                    setConfirmPassword(value);
                                     if (fieldErrors.confirmPassword) {
                                         setFieldErrors({...fieldErrors, confirmPassword: ''});
                                     }
                                 }}
                                 required
                                 autoComplete="new-password"
-                                minLength="6"
+                                minLength="8"
+                                maxLength="128"
                             />
                         </div>
                         {fieldErrors.confirmPassword && <span className="field-error">{fieldErrors.confirmPassword}</span>}
