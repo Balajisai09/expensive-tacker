@@ -1,0 +1,70 @@
+.settings-page {
+  padding: 2rem;
+  max-width: 600px;
+}
+
+.settings-page h1 {
+  margin-bottom: 2rem;
+}
+
+.settings-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.settings-card h2 {
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 1rem;
+}
+
+.setting-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.setting-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.setting-group select,
+.setting-group input[type='text'] {
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.setting-group.checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.setting-group.checkbox input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.setting-group.checkbox label {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.success-message {
+  color: #10b981;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .settings-page {
+    padding: 1rem;
+  }
+}
