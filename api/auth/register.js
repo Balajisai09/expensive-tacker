@@ -25,18 +25,23 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: 'All fields are required' })
     }
 
-    // MongoDB connection
-    const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/expense-tracker'
+    // MongoDB connection - use environment variable
+    const MONGODB_URI = process.env.MONGODB_URI
     
-    if (!mongoose.connection.readyState) {
-      await mongoose.connect(MONGODB_URI, {
-        serverSelectionTimeoutMS: 5000,
-        socketTimeoutMS: 45000,
-      })
+    if (!MONGODB_URI) {
+      console.error('MONGODB_URI not found in environment')
+      return res.status(500).json({ message: 'Database configuration error' })
     }
+    
+    // Always connect in serverless environment
+    await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    })
 
     // Check database connection
     if (mongoose.connection.readyState !== 1) {
+      console.error('Database connection state:', mongoose.connection.readyState)
       return res.status(503).json({ message: 'Database connection error. Please try again.' })
     }
 
@@ -58,6 +63,14 @@ export default async function handler(req, res) {
     })
   } catch (error) {
     console.error('Registration error:', error)
-    res.status(500).json({ message: 'Server error' })
+    res.status(500).json({ 
+      message: 'Server error',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    })
+  } finally {
+    // Close connection in serverless environment
+    if (mongoose.connection.readyState === 1) {
+      await mongoose.disconnect()
+    }
   }
 }
