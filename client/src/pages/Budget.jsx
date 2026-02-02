@@ -43,7 +43,7 @@ function Budget() {
   const handleDeleteBudget = async (id) => {
     try {
       await budgetAPI.delete(id)
-      setBudgets(budgets.filter((b) => b._id !== id))
+      setBudgets(budgets.filter((b) => (b.id || b._id) !== id))
     } catch (error) {
       console.error('Failed to delete budget:', error)
     }

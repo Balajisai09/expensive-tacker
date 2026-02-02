@@ -8,12 +8,12 @@ function BudgetList({ budgets, onDelete }) {
   return (
     <div className="budget-list">
       {budgets.map((budget) => (
-        <div key={budget._id} className="budget-card">
+        <div key={budget.id || budget._id} className="budget-card">
           <div className="budget-header">
             <h3>{budget.category}</h3>
             <button
               className="btn-delete"
-              onClick={() => onDelete(budget._id)}
+              onClick={() => onDelete(budget.id || budget._id)}
             >
               Delete
             </button>
@@ -22,7 +22,7 @@ function BudgetList({ budgets, onDelete }) {
           <div className="budget-details">
             <div className="detail-item">
               <span>Limit:</span>
-              <p>${budget.limit.toFixed(2)}</p>
+              <p>${(budget.amount || budget.limit).toFixed(2)}</p>
             </div>
             <div className="detail-item">
               <span>Spent:</span>
