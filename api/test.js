@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken'
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' })
@@ -20,6 +22,6 @@ export default async function handler(req, res) {
     })
   } catch (error) {
     console.error('Test error:', error)
-    res.status(500).json({ message: 'Server error' })
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
 }
