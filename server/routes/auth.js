@@ -1,6 +1,7 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
+import mongoose from 'mongoose'
 import User from '../models/User.js'
 
 const router = express.Router()
@@ -15,7 +16,12 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' })
     }
 
-    const existingUser = await User.findOne({ email })
+    // Check database connection
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ message: 'Database connection error. Please try again.' })
+    }
+
+    const existingUser = await User.findOne({ email }).maxTimeMS(5000)
     if (existingUser) {
       return res.status(400).json({ message: 'Email already exists' })
     }
