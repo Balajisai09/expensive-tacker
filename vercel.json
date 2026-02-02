@@ -16,11 +16,11 @@
   "routes": [
     {
       "src": "/api/auth/register",
-      "dest": "/api/register.js"
+      "dest": "/api/auth/register.js"
     },
     {
       "src": "/api/auth/login",
-      "dest": "/api/login.js"
+      "dest": "/api/auth/login.js"
     },
     {
       "src": "/(.*)",
