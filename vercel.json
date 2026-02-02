@@ -23,6 +23,22 @@
       "dest": "/api/auth/login.js"
     },
     {
+      "src": "/api/transactions",
+      "dest": "/api/transactions.js"
+    },
+    {
+      "src": "/api/categories",
+      "dest": "/api/categories.js"
+    },
+    {
+      "src": "/api/budgets",
+      "dest": "/api/budgets.js"
+    },
+    {
+      "src": "/api/reports",
+      "dest": "/api/reports.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/client/$1"
     }
